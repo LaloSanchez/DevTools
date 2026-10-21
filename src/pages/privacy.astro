@@ -1,36 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { contactEmail } from '../config/site';
+
+const h2 = 'text-xl font-semibold text-slate-900 dark:text-slate-100';
+const link = 'text-indigo-700 underline dark:text-indigo-400';
 ---
 
 <BaseLayout
   title="Política de privacidad — DevTools"
-  description="Qué datos trata DevTools: las herramientas procesan el contenido en tu navegador y no lo envían a servidores."
+  description="Qué datos trata DevTools: las herramientas procesan el contenido en tu navegador, no usan cookies y no lo envían a servidores."
 >
   <div class="mx-auto max-w-3xl px-4 py-12">
     <h1 class="text-3xl font-bold">Política de privacidad</h1>
-    <p class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
-      Versión inicial. Debe revisarse y completarse cuando se definan el dominio, la jurisdicción aplicable, la analítica y la publicidad.
-    </p>
+    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Última actualización: 21 de octubre de 2026</p>
 
     <div class="mt-8 space-y-8 text-slate-700 dark:text-slate-300">
+      <section aria-labelledby="responsable">
+        <h2 id="responsable" class={h2}>Responsable</h2>
+        <p class="mt-2">
+          Este sitio, DevTools, lo mantiene Eduardo Sanchez Zarco.
+          {
+            contactEmail ? (
+              <>
+                Puedes escribirle a <a class={link} href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+              </>
+            ) : (
+              <>Los datos de contacto están en la página de <a class={link} href="/contact/">contacto</a>.</>
+            )
+          }
+        </p>
+      </section>
+
       <section aria-labelledby="contenido">
-        <h2 id="contenido" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Lo que escribes en las herramientas</h2>
-        <p class="mt-2">Las herramientas procesan el contenido en tu navegador. No se envía a nuestros servidores ni a servicios externos, y tampoco se guarda automáticamente.</p>
+        <h2 id="contenido" class={h2}>Lo que escribes en las herramientas</h2>
+        <p class="mt-2">Las herramientas procesan el contenido en tu navegador. No se envía a nuestros servidores ni a servicios externos, y tampoco se guarda automáticamente. Al cerrar o recargar la página, desaparece.</p>
       </section>
 
       <section aria-labelledby="almacenamiento">
-        <h2 id="almacenamiento" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Almacenamiento en tu navegador</h2>
-        <p class="mt-2">Guardamos únicamente tu preferencia de tema (claro u oscuro) en el almacenamiento local de tu navegador. Puedes borrarla desde la configuración del navegador.</p>
+        <h2 id="almacenamiento" class={h2}>Cookies y almacenamiento en tu navegador</h2>
+        <p class="mt-2">El sitio no usa cookies. Guarda únicamente tu preferencia de tema (claro u oscuro) en el almacenamiento local de tu navegador, para recordarla en tu próxima visita. Puedes borrarla desde la configuración del navegador.</p>
       </section>
 
       <section aria-labelledby="alojamiento">
-        <h2 id="alojamiento" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Registros del alojamiento</h2>
-        <p class="mt-2">Como en cualquier sitio web, el servicio de alojamiento puede registrar datos técnicos de las visitas, como la dirección IP y el navegador, para operar y proteger el servicio.</p>
+        <h2 id="alojamiento" class={h2}>Alojamiento y datos técnicos</h2>
+        <p class="mt-2">
+          El sitio está alojado en <a class={link} href="https://www.cloudflare.com/">Cloudflare</a>. Como en cualquier sitio web, al visitarlo el servicio de alojamiento puede procesar datos técnicos de la conexión, como tu dirección IP y el tipo de navegador, para entregar las páginas y proteger el servicio. Esos datos los trata Cloudflare según <a class={link} href="https://www.cloudflare.com/privacypolicy/">su propia política de privacidad</a>; este sitio no los consulta ni los usa para identificarte.
+        </p>
       </section>
 
-      <section aria-labelledby="pendiente">
-        <h2 id="pendiente" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Analítica y publicidad</h2>
+      <section aria-labelledby="mensajes">
+        <h2 id="mensajes" class={h2}>Si nos escribes</h2>
+        <p class="mt-2">Si nos contactas por correo, usaremos tu dirección y tu mensaje únicamente para responderte. No los compartimos con terceros para otros fines.</p>
+      </section>
+
+      <section aria-labelledby="publicidad">
+        <h2 id="publicidad" class={h2}>Analítica y publicidad</h2>
         <p class="mt-2">Por ahora el sitio no usa analítica ni publicidad. Si se incorporan, esta política se actualizará antes e indicará qué datos se recogen, con qué finalidad y cómo gestionar tu consentimiento.</p>
+      </section>
+
+      <section aria-labelledby="cambios">
+        <h2 id="cambios" class={h2}>Cambios en esta política</h2>
+        <p class="mt-2">Si esta política cambia, se publicará aquí la nueva versión con su fecha de actualización.</p>
       </section>
     </div>
   </div>
