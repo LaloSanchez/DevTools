@@ -1,0 +1,70 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import JsonFormatter from '../../tools/json-formatter/JsonFormatter';
+---
+
+<ToolLayout
+  title="JSON Formatter y Validador online gratis — DevTools"
+  description="Formatea, valida y minifica JSON en tu navegador. Indica la línea del error, permite copiar o descargar el resultado y no envía tus datos a ningún servidor."
+  heading="JSON Formatter y Validador"
+  lead="Pega tu JSON para darle formato, comprobar que es válido o minificarlo. Todo ocurre en tu navegador."
+  crumb="JSON Formatter"
+  slug="json-formatter"
+>
+  <JsonFormatter client:load />
+
+  <div class="mt-12 max-w-3xl space-y-8">
+    <section aria-labelledby="como-usar">
+      <h2 id="como-usar" class="text-xl font-semibold">Cómo usar la herramienta</h2>
+      <ol class="mt-3 list-decimal space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li>Pega tu JSON en el campo «Entrada», o carga uno de los ejemplos.</li>
+        <li>Elige la indentación que prefieras: 2, 4 u 8 espacios, o tabulador.</li>
+        <li>Pulsa «Formatear» para ordenarlo y validarlo, o «Minificar» para quitar espacios y saltos de línea.</li>
+        <li>Si hay un error, verás qué falla y la línea y columna aproximadas donde está.</li>
+        <li>Copia el resultado o descárgalo como archivo <code>.json</code>.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="que-es">
+      <h2 id="que-es" class="text-xl font-semibold">¿Qué es JSON y por qué conviene formatearlo?</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        JSON es un formato de texto para intercambiar datos entre aplicaciones. Las APIs suelen enviarlo en una sola línea para ahorrar espacio, lo que lo hace difícil de leer. Formatearlo añade saltos de línea y sangría para que veas su estructura; minificarlo hace lo contrario y reduce su tamaño.
+      </p>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        Errores frecuentes: comillas simples en lugar de dobles, claves sin comillas, una coma después del último elemento o un corchete sin cerrar. El validador detecta estos casos y te indica dónde mirar.
+      </p>
+    </section>
+
+    <section aria-labelledby="ejemplo">
+      <h2 id="ejemplo" class="text-xl font-semibold">Ejemplo</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">Esta entrada en una sola línea:</p>
+      <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-100 p-3 text-sm dark:bg-slate-900"><code>{`{"usuario":{"id":1,"roles":["admin","editor"]}}`}</code></pre>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">se convierte, con 2 espacios, en:</p>
+      <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-100 p-3 text-sm dark:bg-slate-900"><code>{`{
+  "usuario": {
+    "id": 1,
+    "roles": [
+      "admin",
+      "editor"
+    ]
+  }
+}`}</code></pre>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq" class="text-xl font-semibold">Preguntas frecuentes</h2>
+      <h3 class="mt-4 font-medium">¿Se envía mi JSON a algún servidor?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        No. El procesamiento ocurre en tu navegador y lo que escribes no se guarda ni se transmite. Aun así, evita pegar credenciales o datos sensibles en cualquier página web.
+      </p>
+      <h3 class="mt-4 font-medium">¿Por qué cambia un número muy grande?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        JavaScript guarda los números como decimales de doble precisión, por lo que los enteros de más de 15 dígitos pueden redondearse. La herramienta te avisa cuando detecta números así; si necesitas conservarlos exactos, guárdalos como texto entre comillas.
+      </p>
+      <h3 class="mt-4 font-medium">¿Hay un tamaño máximo?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        Sí, 5 MB, para que el navegador no se bloquee con textos enormes.
+      </p>
+    </section>
+  </div>
+</ToolLayout>

@@ -1,0 +1,42 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AdSlot from '../components/AdSlot.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { relatedTools } from '../content/tools';
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  lead: string;
+  crumb: string;
+  /** Slug de la herramienta, para listar las relacionadas. */
+  slug: string;
+}
+
+const { title, description, heading, lead, crumb, slug } = Astro.props;
+const related = relatedTools(slug).filter((t) => t.available);
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="mx-auto max-w-5xl px-4 py-8">
+    <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Herramientas', href: '/tools/' }, { label: crumb }]} />
+    <h1 class="mt-4 text-3xl font-bold">{heading}</h1>
+    <p class="mt-2 max-w-3xl text-lg text-slate-600 dark:text-slate-400">{lead}</p>
+    <div class="mt-8">
+      <slot />
+    </div>
+    {
+      related.length > 0 && (
+        <section class="mt-12" aria-labelledby="relacionadas">
+          <h2 id="relacionadas" class="text-xl font-semibold">Herramientas relacionadas</h2>
+          <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+            {related.map((t) => <li><ToolCard tool={t} /></li>)}
+          </ul>
+        </section>
+      )
+    }
+    <AdSlot class="mt-12" />
+  </div>
+</BaseLayout>

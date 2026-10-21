@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Política de privacidad — DevTools"
+  description="Qué datos trata DevTools: las herramientas procesan el contenido en tu navegador y no lo envían a servidores."
+>
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="text-3xl font-bold">Política de privacidad</h1>
+    <p class="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
+      Versión inicial. Debe revisarse y completarse cuando se definan el dominio, la jurisdicción aplicable, la analítica y la publicidad.
+    </p>
+
+    <div class="mt-8 space-y-8 text-slate-700 dark:text-slate-300">
+      <section aria-labelledby="contenido">
+        <h2 id="contenido" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Lo que escribes en las herramientas</h2>
+        <p class="mt-2">Las herramientas procesan el contenido en tu navegador. No se envía a nuestros servidores ni a servicios externos, y tampoco se guarda automáticamente.</p>
+      </section>
+
+      <section aria-labelledby="almacenamiento">
+        <h2 id="almacenamiento" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Almacenamiento en tu navegador</h2>
+        <p class="mt-2">Guardamos únicamente tu preferencia de tema (claro u oscuro) en el almacenamiento local de tu navegador. Puedes borrarla desde la configuración del navegador.</p>
+      </section>
+
+      <section aria-labelledby="alojamiento">
+        <h2 id="alojamiento" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Registros del alojamiento</h2>
+        <p class="mt-2">Como en cualquier sitio web, el servicio de alojamiento puede registrar datos técnicos de las visitas, como la dirección IP y el navegador, para operar y proteger el servicio.</p>
+      </section>
+
+      <section aria-labelledby="pendiente">
+        <h2 id="pendiente" class="text-xl font-semibold text-slate-900 dark:text-slate-100">Analítica y publicidad</h2>
+        <p class="mt-2">Por ahora el sitio no usa analítica ni publicidad. Si se incorporan, esta política se actualizará antes e indicará qué datos se recogen, con qué finalidad y cómo gestionar tu consentimiento.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

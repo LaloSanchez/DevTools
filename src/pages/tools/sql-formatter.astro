@@ -1,0 +1,75 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import SqlFormatter from '../../tools/sql-formatter/SqlFormatter';
+---
+
+<ToolLayout
+  title="SQL Formatter online para MySQL y SQL Server — DevTools"
+  description="Da formato y sangría a consultas SQL de MySQL y Transact-SQL (SQL Server). Copia o descarga el resultado. No ejecuta consultas ni envía tus datos."
+  heading="SQL Formatter"
+  lead="Pega una consulta SQL en una sola línea y obtén un resultado ordenado, con cada cláusula en su sitio. Admite MySQL y Transact-SQL (SQL Server)."
+  crumb="SQL Formatter"
+  slug="sql-formatter"
+>
+  <SqlFormatter client:load />
+
+  <div class="mt-12 max-w-3xl space-y-8">
+    <section aria-labelledby="como-usar">
+      <h2 id="como-usar" class="text-xl font-semibold">Cómo usar la herramienta</h2>
+      <ol class="mt-3 list-decimal space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li>Elige el dialecto de tu base de datos: MySQL o Transact-SQL (SQL Server).</li>
+        <li>Pega la consulta en «Consulta SQL», o prueba uno de los ejemplos.</li>
+        <li>Ajusta la indentación y si quieres las palabras clave en mayúsculas o minúsculas.</li>
+        <li>Pulsa «Formatear». Si ya hay un resultado, al cambiar una opción se actualiza solo.</li>
+        <li>Copia el resultado o descárgalo como archivo <code>.sql</code>.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="que-hace">
+      <h2 id="que-hace" class="text-xl font-semibold">Qué hace y qué no hace</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        La herramienta solo procesa texto: reorganiza espacios y saltos de línea para que la consulta sea legible. <strong>No ejecuta la consulta, no se conecta a ninguna base de datos y no comprueba que el SQL sea correcto</strong>. Si hay un fragmento que no puede reconocer, como unas comillas o unos corchetes sin cerrar, te avisa e indica la línea y la columna; pero una consulta con un error lógico, como una tabla que no existe o una palabra clave mal escrita, se formateará igualmente.
+      </p>
+    </section>
+
+    <section aria-labelledby="dialectos">
+      <h2 id="dialectos" class="text-xl font-semibold">Por qué importa el dialecto</h2>
+      <ul class="mt-3 list-disc space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li><strong>MySQL</strong> usa acentos graves (<code>`tabla`</code>) para los identificadores, <code>LIMIT 10, 5</code> para paginar y <code>#</code> para comentarios de una línea.</li>
+        <li><strong>Transact-SQL</strong> usa corchetes (<code>[tabla]</code>), <code>TOP 10</code>, parámetros con <code>@</code>, cadenas Unicode <code>N'texto'</code> y <code>GO</code> para separar lotes; en él <code>#tabla</code> es una tabla temporal, no un comentario.</li>
+      </ul>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">Elegir el dialecto equivocado puede hacer que un fragmento válido se interprete mal.</p>
+    </section>
+
+    <section aria-labelledby="ejemplo">
+      <h2 id="ejemplo" class="text-xl font-semibold">Ejemplo</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">Esta consulta en una línea:</p>
+      <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-100 p-3 text-sm dark:bg-slate-900"><code>select id, nombre from usuarios where activo = 1 and pais = 'PE' order by nombre</code></pre>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">queda así:</p>
+      <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-100 p-3 text-sm dark:bg-slate-900"><code>{`select
+  id,
+  nombre
+from
+  usuarios
+where
+  activo = 1
+  and pais = 'PE'
+order by
+  nombre`}</code></pre>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq" class="text-xl font-semibold">Preguntas frecuentes</h2>
+      <h3 class="mt-4 font-medium">¿Se envía mi consulta a algún servidor?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        No. El formateo ocurre en tu navegador. Aun así, evita pegar contraseñas, claves o datos personales dentro de las consultas.
+      </p>
+      <h3 class="mt-4 font-medium">¿Hay un tamaño máximo?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">Sí, 512 KB, para que el navegador no se bloquee.</p>
+      <h3 class="mt-4 font-medium">¿Cambia el significado de mi consulta?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        No debería: solo cambia espacios, saltos de línea y, si lo eliges, la capitalización de las palabras clave. Revisa el resultado antes de usarlo en producción.
+      </p>
+    </section>
+  </div>
+</ToolLayout>

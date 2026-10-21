@@ -1,0 +1,63 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import TextDiff from '../../tools/text-diff/TextDiff';
+---
+
+<ToolLayout
+  title="Comparador de texto y JSON online (diff) — DevTools"
+  description="Compara dos textos o dos JSON y resalta las líneas añadidas, eliminadas y modificadas. Ignora espacios o mayúsculas. Funciona en tu navegador."
+  heading="Comparador de texto y JSON"
+  lead="Pega dos versiones de un texto o de un JSON y mira qué cambió: líneas añadidas, eliminadas y modificadas, con las palabras exactas resaltadas."
+  crumb="Comparador de texto"
+  slug="text-diff"
+>
+  <TextDiff client:load />
+
+  <div class="mt-12 max-w-3xl space-y-8">
+    <section aria-labelledby="como-usar">
+      <h2 id="como-usar" class="text-xl font-semibold">Cómo usar la herramienta</h2>
+      <ol class="mt-3 list-decimal space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li>Pega la versión original a la izquierda y la modificada a la derecha.</li>
+        <li>Elige las opciones que necesites: ignorar espacios, ignorar mayúsculas o comparar como JSON.</li>
+        <li>Pulsa «Comparar». Si cambias una opción después, el resultado se actualiza solo.</li>
+        <li>Con «Mostrar solo las diferencias» ocultas las líneas iguales y dejas dos de contexto alrededor de cada cambio.</li>
+        <li>«Intercambiar» invierte los lados y «Copiar diferencias» te lleva el resultado en formato de texto.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="como-funciona">
+      <h2 id="como-funciona" class="text-xl font-semibold">Cómo se comparan los textos</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        El texto se divide en líneas y se busca la secuencia más larga de líneas que ambas versiones tienen en común; todo lo demás son cambios. Cuando una línea eliminada y una añadida se parecen lo suficiente, se muestran como una sola línea modificada y se resaltan las palabras que cambiaron. Si no se parecen, aparecen como una eliminación y una adición separadas.
+      </p>
+      <ul class="mt-3 list-disc space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li><strong>Ignorar espacios en blanco</strong> recorta cada línea y trata varios espacios o tabuladores seguidos como uno solo.</li>
+        <li><strong>Ignorar mayúsculas</strong> considera iguales «Hola» y «hola».</li>
+        <li>Los saltos de línea de Windows (CRLF) y de Unix (LF) se consideran iguales, y un salto de línea al final del texto no cuenta como diferencia.</li>
+        <li>
+          En <strong>modo JSON</strong> ambos lados se validan y se vuelven a escribir con el mismo formato antes de comparar, así que un JSON minificado y otro con sangría no aparecen como distintos. Por defecto también se ignora el orden de las claves de los objetos; el orden de los elementos de un arreglo siempre importa.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="ejemplo">
+      <h2 id="ejemplo" class="text-xl font-semibold">Ejemplo</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">Comparar estas dos versiones:</p>
+      <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-100 p-3 text-sm dark:bg-slate-900"><code>{`Color: rojo        Color: azul
+Talla: M           Talla: M`}</code></pre>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        marca la primera línea como modificada, resalta «rojo» y «azul», y deja la segunda como sin cambios.
+      </p>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq" class="text-xl font-semibold">Preguntas frecuentes</h2>
+      <h3 class="mt-4 font-medium">¿Hay un tamaño máximo?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        Cada lado puede pesar hasta 1 MB. Si los textos son muy extensos y distintos, la comparación puede tardar demasiado y la herramienta la cancela con un aviso; en ese caso compara fragmentos más pequeños.
+      </p>
+      <h3 class="mt-4 font-medium">¿Se envían mis textos a algún servidor?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">No. La comparación ocurre en tu navegador y lo que pegas no se guarda ni se transmite.</p>
+    </section>
+  </div>
+</ToolLayout>

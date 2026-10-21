@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SearchTools from '../../components/SearchTools';
+import { tools } from '../../content/tools';
+---
+
+<BaseLayout
+  title="Herramientas para desarrolladores — DevTools"
+  description="Catálogo de herramientas gratuitas para desarrolladores: JSON, SQL, comparación de texto y timestamps."
+>
+  <div class="mx-auto max-w-5xl px-4 py-12">
+    <h1 class="text-3xl font-bold">Herramientas</h1>
+    <p class="mt-2 mb-6 text-slate-600 dark:text-slate-400">Busca entre todas las herramientas disponibles.</p>
+    <SearchTools client:load tools={tools} />
+  </div>
+</BaseLayout>

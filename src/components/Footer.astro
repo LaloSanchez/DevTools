@@ -1,0 +1,18 @@
+---
+const links = [
+  { href: '/about/', label: 'Acerca de' },
+  { href: '/privacy/', label: 'Privacidad' },
+  { href: '/contact/', label: 'Contacto' },
+];
+---
+
+<footer class="border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-6 text-sm text-slate-600 dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+    <p>DevTools: herramientas gratuitas para desarrolladores. Todo se procesa en tu navegador; lo que escribes no se envía a ningún servidor.</p>
+    <nav aria-label="Información del sitio">
+      <ul class="flex gap-4">
+        {links.map((l) => <li><a href={l.href} class="hover:underline">{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</footer>

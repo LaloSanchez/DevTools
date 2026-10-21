@@ -1,0 +1,28 @@
+---
+import type { Tool } from '../content/tools';
+import { toolUrl } from '../content/tools';
+
+interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+const base =
+  'block h-full rounded-lg border border-slate-200 p-4 dark:border-slate-800';
+---
+
+{
+  tool.available ? (
+    <a href={toolUrl(tool)} class={`${base} transition-colors hover:border-indigo-500`}>
+      <p class="text-xs font-medium uppercase tracking-wide text-indigo-600 dark:text-indigo-400">{tool.category}</p>
+      <h3 class="mt-1 font-semibold">{tool.name}</h3>
+      <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{tool.description}</p>
+    </a>
+  ) : (
+    <div class={`${base} border-dashed`}>
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-600 dark:text-slate-400">{tool.category} · Próximamente</p>
+      <h3 class="mt-1 font-semibold">{tool.name}</h3>
+      <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{tool.description}</p>
+    </div>
+  )
+}

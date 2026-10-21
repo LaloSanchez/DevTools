@@ -1,0 +1,24 @@
+---
+import { adsEnabled } from '../config/site';
+
+interface Props {
+  /** Altura reservada en px para que el anuncio no desplace el contenido al cargar. */
+  minHeight?: number;
+  class?: string;
+}
+
+const { minHeight = 280, class: className = '' } = Astro.props;
+---
+
+{
+  adsEnabled && (
+    <aside
+      aria-label="Publicidad"
+      class:list={['w-full overflow-hidden rounded-lg border border-dashed border-slate-300 dark:border-slate-700', className]}
+      style={`min-height:${minHeight}px`}
+    >
+      <p class="p-2 text-center text-xs text-slate-600 dark:text-slate-400">Publicidad</p>
+      {/* Aquí irá el código de la red publicitaria cuando se configure y apruebe. */}
+    </aside>
+  )
+}

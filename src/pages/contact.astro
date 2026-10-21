@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { contactEmail } from '../config/site';
+---
+
+<BaseLayout
+  title="Contacto — DevTools"
+  description="Cómo contactar con el equipo de DevTools para enviar sugerencias o reportar problemas."
+>
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="text-3xl font-bold">Contacto</h1>
+    <div class="mt-6 space-y-4 text-slate-700 dark:text-slate-300">
+      <p>¿Encontraste un error o tienes una idea para una herramienta? Escríbenos.</p>
+      {
+        contactEmail ? (
+          <p>
+            Correo: <a class="text-indigo-700 underline dark:text-indigo-400" href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          </p>
+        ) : (
+          <p>El canal de contacto todavía no está configurado.</p>
+        )
+      }
+      <p>Por favor, no incluyas contraseñas ni datos sensibles en tus mensajes.</p>
+    </div>
+  </div>
+</BaseLayout>
