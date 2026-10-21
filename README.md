@@ -220,3 +220,9 @@ Los espacios están desactivados: `AdSlot.astro` no incluye scripts, identificad
 - Tras instalar dependencias o cambiar la configuración, reinicia `npm run dev` (y borra `node_modules/.vite` si la interfaz deja de hidratar).
 - No hay imagen para redes sociales (`og:image`).
 - La política de privacidad es un borrador técnico, no asesoramiento legal.
+
+## Licencia
+
+Copyright © 2026 Eduardo Sanchez Zarco. Todos los derechos reservados.
+
+Este repositorio no tiene licencia de código abierto: sin permiso expreso del titular, no se concede derecho a copiar, modificar ni redistribuir el código. Las herramientas publicadas en https://tools.eduardo-sanchez.dev son de uso libre y gratuito.
