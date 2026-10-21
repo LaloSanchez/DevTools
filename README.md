@@ -66,7 +66,7 @@ Si ya trabajas en el proyecto y solo añades dependencias, usa `npm install`. Co
 | `npm run lint` | ESLint |
 | `npm run check` | Comprobación de tipos (`astro check`) |
 
-Antes de publicar cambios: `npm run lint && npm run check && npm test && npm run build`.
+Antes de publicar cambios: `npm run lint && npm run check && npm test && npm run build`. El flujo de GitHub Actions (`.github/workflows/ci.yml`) ejecuta esos mismos cuatro pasos en cada push a `main` y en cada pull request.
 
 ## Estructura
 
