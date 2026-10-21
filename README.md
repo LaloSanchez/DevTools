@@ -107,6 +107,23 @@ Ninguna es obligatoria. Están descritas en `.env.example`. Son valores de compi
 - Lo único que se guarda en el navegador es la preferencia de tema.
 - Se comprobó en Chrome, con registro de peticiones, que usar la herramienta no genera peticiones externas.
 
+## Producción
+
+| | |
+| --- | --- |
+| Dominio | https://tools.eduardo-sanchez.dev |
+| Alojamiento | Cloudflare Pages (proyecto `devtools-efs`, dirección `devtools-efs.pages.dev`) |
+| `SITE_URL` en Cloudflare | `https://tools.eduardo-sanchez.dev` (entorno **Production**) |
+
+**Importante:** `SITE_URL` debe ser el dominio propio y no `devtools-efs.pages.dev`. De ese valor salen el canonical, `og:url`, el sitemap y la línea `Sitemap:` de `robots.txt`. Tras cambiarlo hay que volver a desplegar.
+
+Para comprobar que quedó bien:
+
+```bash
+curl -s https://tools.eduardo-sanchez.dev/robots.txt                      # Sitemap: https://tools.eduardo-sanchez.dev/sitemap-index.xml
+curl -s https://tools.eduardo-sanchez.dev/tools/json-formatter/ | grep -o '<link rel="canonical"[^>]*>'
+```
+
 ## Despliegue en Cloudflare Pages
 
 Revisado el 20 de octubre de 2026. Las condiciones de Cloudflare cambian: compruébalas en su documentación antes de publicar.
@@ -167,16 +184,19 @@ Lo que pude comprobar en la documentación oficial (plan gratuito de Pages):
 
 1. En tu proyecto de Pages: **Custom domains → Set up a custom domain**.
 2. Si el DNS del dominio ya está en Cloudflare, el registro se crea desde el panel. Si no, crea el registro `CNAME` que Cloudflare te indique en tu proveedor de DNS.
-3. Cloudflare gestiona el certificado HTTPS del dominio; verifica en el panel que el estado sea activo antes de anunciar el sitio.
+3. Cloudflare gestiona el certificado HTTPS del dominio; verifica en el panel que el estado sea activo antes de anunciar el sitio. Con `tools.eduardo-sanchez.dev` se comprobó que el certificado es válido y que `http://` redirige con 301 a `https://`.
 4. Define `SITE_URL` con el dominio final y vuelve a desplegar para que canonical y sitemap apunten a él.
+5. **Redirige la dirección `pages.dev` al dominio propio**, para que el contenido no quede duplicado en dos direcciones. Cloudflare lo documenta con una *Bulk Redirect* 301 de `<proyecto>.pages.dev` a tu dominio, con las opciones «Preserve path suffix» e «Include subdomains»: [guía oficial](https://developers.cloudflare.com/pages/how-to/redirect-to-custom-domain/). Se configura en el panel de la cuenta, no en este repositorio. Mientras no exista esa redirección, el canonical (cuando `SITE_URL` apunta al dominio propio) es lo que indica a los buscadores cuál es la dirección principal.
+6. Opcional: activa HSTS en **SSL/TLS → Edge Certificates**. Hazlo solo cuando estés seguro de que todo el sitio y sus subdominios funcionan por HTTPS, porque es difícil de revertir.
 
 ## Search Console y analítica
 
-**Search Console (pendiente, requiere dominio):**
+**Search Console** (ya hay dominio, falta hacerlo):
 
-1. Añade el dominio en Google Search Console y verifícalo (registro DNS `TXT`, o la etiqueta HTML en `BaseLayout.astro`).
-2. Envía `https://tu-dominio.com/sitemap-index.xml`.
-3. Esto no garantiza la indexación ni el posicionamiento.
+1. En Google Search Console, añade la propiedad. Con «Dominio» (`eduardo-sanchez.dev`) cubres todos los subdominios y se verifica con un registro DNS `TXT`; con «Prefijo de URL» (`https://tools.eduardo-sanchez.dev/`) puedes verificar con la etiqueta HTML en `BaseLayout.astro`.
+2. Comprueba antes que `SITE_URL` ya apunta al dominio propio (ver «Producción»).
+3. Envía `https://tools.eduardo-sanchez.dev/sitemap-index.xml`.
+4. Esto no garantiza la indexación ni el posicionamiento.
 
 **Analítica (no configurada):** el sitio no usa analítica ni cookies de seguimiento. Antes de añadirla, actualiza `src/pages/privacy.astro` y valora si necesitas aviso de consentimiento según tu jurisdicción. Nunca registres el contenido que los usuarios escriben en las herramientas.
 
