@@ -1,0 +1,92 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import ApiTester from '../../tools/api-tester/ApiTester';
+---
+
+<ToolLayout
+  title="Probador de APIs REST online gratis — DevTools"
+  description="Envía peticiones GET, POST, PUT, PATCH y DELETE a una API desde tu navegador, con parámetros, cabeceras, cuerpo JSON y autenticación. Sin registro y sin intermediarios."
+  heading="Probador de APIs"
+  lead="Envía peticiones HTTP a una API y revisa el código de estado, las cabeceras y la respuesta. La petición sale directamente de tu navegador hacia la API, sin pasar por nuestros servidores."
+  crumb="Probador de APIs"
+  slug="api-tester"
+>
+  <ApiTester client:load />
+
+  <div class="mt-12 max-w-3xl space-y-8">
+    <section aria-labelledby="como-usar">
+      <h2 id="como-usar" class="text-xl font-semibold">Cómo usar la herramienta</h2>
+      <ol class="mt-3 list-decimal space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li>Elige el método (GET, POST, PUT, PATCH, DELETE, HEAD u OPTIONS) y escribe la URL de la API.</li>
+        <li>Si hace falta, añade parámetros de consulta y cabeceras. Puedes desactivar una fila con su casilla sin borrarla.</li>
+        <li>En «Cuerpo», elige JSON, texto o formulario y escribe los datos. El tipo de contenido (<code>Content-Type</code>) se añade solo.</li>
+        <li>En «Autenticación», pon un token Bearer o un usuario y contraseña (Basic). Si aún no tienes token, abre «Obtener un token».</li>
+        <li>Pulsa «Enviar» o la tecla Intro en la URL. Verás el código de estado, el tiempo, el tamaño, las cabeceras y el cuerpo de la respuesta; si es JSON, se formatea.</li>
+        <li>Copia la petición como comando cURL para repetirla desde la terminal.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="cors">
+      <h2 id="cors" class="text-xl font-semibold">Por qué algunas APIs no responden: CORS</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        Como la petición sale de tu navegador, este aplica la política CORS: solo deja leer la respuesta si la API lo permite expresamente con la cabecera <code>Access-Control-Allow-Origin</code>. Muchas APIs públicas lo permiten; otras solo aceptan peticiones desde su propia web o desde un servidor. En ese caso la herramienta mostrará un error de red aunque la API funcione: prueba con el comando cURL.
+      </p>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        Por el mismo motivo, el navegador solo muestra las cabeceras de respuesta que la API decide exponer, e impide fijar algunas cabeceras de la petición, como <code>Cookie</code>, <code>Host</code> u <code>Origin</code>.
+      </p>
+    </section>
+
+    <section aria-labelledby="local">
+      <h2 id="local" class="text-xl font-semibold">Probar una API en tu equipo (localhost)</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        Puedes enviar peticiones a <code>http://localhost</code> mientras desarrollas. Activa CORS en tu servidor para el origen de esta página; por ejemplo, en Express con el paquete <code>cors</code>. Las direcciones <code>http://</code> que no sean de tu equipo las bloquea el navegador desde una página segura: usa <code>https://</code>.
+      </p>
+    </section>
+
+    <section aria-labelledby="tokens">
+      <h2 id="tokens" class="text-xl font-semibold">Obtener un token de autenticación</h2>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        En la pestaña «Autenticación», elige «Bearer token» y abre «Obtener un token». Según el método que elijas, la herramienta te pide unos datos u otros, y al terminar copia el token en el campo «Token»:
+      </p>
+      <ul class="mt-3 list-disc space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li><strong>Petición de login:</strong> la URL de tu endpoint de login y el cuerpo JSON con las credenciales. El token se busca en la respuesta (<code>access_token</code>, <code>token</code>, <code>data.token</code>…) o en el campo que indiques.</li>
+        <li><strong>OAuth 2.0 client credentials:</strong> la URL de token, el <code>client_id</code>, el <code>client_secret</code> y, si hace falta, el <code>scope</code> y la <code>audience</code>.</li>
+        <li><strong>OAuth 2.0 password:</strong> lo mismo más el usuario y la contraseña.</li>
+        <li><strong>OAuth 2.0 authorization code + PKCE:</strong> la URL de autorización y la de token, y el <code>client_id</code>. Inicias sesión en una ventana emergente del proveedor. Antes, registra en el proveedor la URL de retorno que muestra la herramienta.</li>
+      </ul>
+      <p class="mt-3 text-slate-700 dark:text-slate-300">
+        Si el proveedor devuelve un refresh token, puedes renovar el token sin volver a iniciar sesión. Como el resto de peticiones, los endpoints de token deben permitir CORS. Usa el <code>client_secret</code> solo con credenciales de prueba, porque queda en tu navegador.
+      </p>
+    </section>
+
+    <section aria-labelledby="codigos">
+      <h2 id="codigos" class="text-xl font-semibold">Códigos de estado HTTP más comunes</h2>
+      <ul class="mt-3 list-disc space-y-1 pl-6 text-slate-700 dark:text-slate-300">
+        <li><strong>2xx (éxito):</strong> 200 OK, 201 Created (recurso creado), 204 No Content (éxito sin cuerpo).</li>
+        <li><strong>3xx (redirección):</strong> el navegador sigue la redirección y la herramienta te indica la dirección final.</li>
+        <li><strong>4xx (error de la petición):</strong> 400 datos incorrectos, 401 falta autenticación, 403 sin permiso, 404 no existe, 422 validación fallida, 429 demasiadas peticiones.</li>
+        <li><strong>5xx (error del servidor):</strong> 500 error interno, 502 y 504 problemas de pasarela, 503 servicio no disponible.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq" class="text-xl font-semibold">Preguntas frecuentes</h2>
+      <h3 class="mt-4 font-medium">¿Pasan mis peticiones o mis tokens por vuestros servidores?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        No. La petición va directamente de tu navegador a la URL que escribes; no hay ningún servidor intermedio. DevTools no guarda las URLs, las cabeceras, los tokens ni las respuestas: desaparecen al recargar la página. La API que llamas sí recibe lo que envías, como con cualquier cliente.
+      </p>
+      <h3 class="mt-4 font-medium">¿Se envían mis cookies?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        No. Las peticiones se hacen sin cookies ni cabecera <code>Referer</code>. Si la API necesita autenticación, usa la pestaña «Autenticación» o una cabecera propia.
+      </p>
+      <h3 class="mt-4 font-medium">¿Hay límites?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        El cuerpo de la petición puede ocupar hasta 1 MB y de la respuesta se muestran como máximo los primeros 5 MB. Si la API tarda más de 30 segundos, la petición se cancela. Las respuestas binarias, como imágenes o PDF, no se muestran como texto.
+      </p>
+      <h3 class="mt-4 font-medium">¿A dónde van los ejemplos?</h3>
+      <p class="mt-1 text-slate-700 dark:text-slate-300">
+        A <a class="text-indigo-700 underline dark:text-indigo-400" href="https://jsonplaceholder.typicode.com/">JSONPlaceholder</a>, una API pública de prueba que devuelve datos ficticios y permite CORS. Solo se llama si pulsas «Enviar».
+      </p>
+    </section>
+  </div>
+</ToolLayout>

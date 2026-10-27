@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Volviendo al probador de APIs — DevTools" description="Página de retorno del inicio de sesión OAuth del probador de APIs." noindex>
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="text-2xl font-bold">Inicio de sesión completado</h1>
+    <p id="mensaje" class="mt-3 text-slate-700 dark:text-slate-300">Volviendo al probador de APIs…</p>
+  </div>
+</BaseLayout>
+
+<script>
+  import { CALLBACK_CHANNEL } from '../../../tools/api-tester/token';
+
+  // El proveedor devuelve el código en la query (?code=…) o, si se pidió, en el fragmento (#code=…).
+  const params = Object.fromEntries([...new URLSearchParams(location.search), ...new URLSearchParams(location.hash.slice(1))]);
+  history.replaceState(null, '', location.pathname); // el código no se queda en el historial
+  // BroadcastChannel solo llega a pestañas de este mismo sitio, y funciona aunque el proveedor
+  // haya cortado el vínculo con la ventana que abrió la emergente (window.opener).
+  const channel = new BroadcastChannel(CALLBACK_CHANNEL);
+  channel.postMessage(params);
+  channel.close();
+  const message = document.getElementById('mensaje');
+  if (message) message.textContent = 'Ya puedes cerrar esta ventana y volver al probador de APIs.';
+  window.close();
+</script>

@@ -7,17 +7,28 @@ export interface Tool {
   available: boolean;
   /** Slugs de herramientas relacionadas, para los enlaces internos de cada página. */
   related: string[];
+  /** Herramienta principal: se muestra destacada arriba de la home. */
+  featured?: boolean;
 }
 
 // Registro central de herramientas. Al añadir una, la home y el buscador la recogen solos.
 export const tools: Tool[] = [
+  {
+    slug: 'api-tester',
+    name: 'Probador de APIs',
+    description: 'Envía peticiones HTTP a una API REST y revisa el estado, las cabeceras y la respuesta.',
+    category: 'APIs',
+    available: true,
+    related: ['json-formatter', 'timestamp-converter'],
+    featured: true,
+  },
   {
     slug: 'json-formatter',
     name: 'JSON Formatter y Validador',
     description: 'Formatea, valida y minifica JSON directamente en tu navegador.',
     category: 'Datos',
     available: true,
-    related: ['text-diff', 'sql-formatter'],
+    related: ['api-tester', 'text-diff', 'sql-formatter'],
   },
   {
     slug: 'text-diff',

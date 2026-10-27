@@ -6,6 +6,7 @@ Herramientas gratuitas para desarrolladores, en español. Sitio estático con As
 
 | Herramienta | Ruta |
 | --- | --- |
+| **Probador de APIs** (herramienta principal, destacada en la home) | `/tools/api-tester/` |
 | JSON Formatter y Validador | `/tools/json-formatter/` |
 | Comparador de texto y JSON | `/tools/text-diff/` |
 | SQL Formatter (MySQL y Transact-SQL) | `/tools/sql-formatter/` |
@@ -31,7 +32,7 @@ Herramientas gratuitas para desarrolladores, en español. Sitio estático con As
 | [`diff`](https://www.npmjs.com/package/diff) 9 | Comparador de texto | jsdiff: sin dependencias, con tipos propios, licencia BSD-3. Se eligió frente a otras por estar mantenida. |
 | [`sql-formatter`](https://www.npmjs.com/package/sql-formatter) 15 | SQL Formatter | Licencia MIT. Se comprobó que soporta los dialectos `mysql` y `transactsql`. Se descarga solo al pulsar «Formatear» (unos 74 KB comprimidos). |
 
-JSON Formatter y el convertidor de timestamp no usan bibliotecas externas: emplean `JSON` e `Intl` del navegador.
+JSON Formatter, el convertidor de timestamp y el probador de APIs no usan bibliotecas externas: emplean `JSON`, `Intl` y `fetch` del navegador.
 
 ## Requisitos
 
@@ -103,9 +104,11 @@ Ninguna es obligatoria. Están descritas en `.env.example`. Son valores de compi
 
 ## Privacidad
 
-- El contenido que se escribe en las herramientas no se envía ni se guarda. No hay `fetch`, `eval` ni `innerHTML` en el código de `src/`.
+- El contenido que se escribe en las herramientas no se envía ni se guarda. No hay `eval` ni `innerHTML` en el código de `src/`.
+- **Excepción, el probador de APIs:** es la única llamada a `fetch` del sitio (`src/tools/api-tester/http.ts`). Envía la petición directamente desde el navegador a la URL que escribe el usuario, sin proxy, con `credentials: 'omit'` (sin cookies) y `referrerPolicy: 'no-referrer'`. Ni la petición ni la respuesta se guardan. La política de privacidad lo explica.
+- **Obtención de tokens** (pestaña «Autenticación» → Bearer → «Obtener un token»): login propio con el token en la respuesta JSON, y OAuth 2.0 con client credentials, password y authorization code + PKCE. Para PKCE, la ventana emergente vuelve a `/tools/api-tester/callback/`, que hay que registrar como URL de retorno en el proveedor. Esa petición llega a Cloudflare con el código de un solo uso en la URL, salvo que se active «Recibir el código en el fragmento».
 - Lo único que se guarda en el navegador es la preferencia de tema.
-- Se comprobó en Chrome, con registro de peticiones, que usar la herramienta no genera peticiones externas.
+- Se comprobó en Chrome, con registro de peticiones, que usar las demás herramientas no genera peticiones externas.
 
 ## Producción
 
@@ -217,6 +220,7 @@ Los espacios están desactivados: `AdSlot.astro` no incluye scripts, identificad
 - SQL Formatter **formatea, no valida**: solo detecta fragmentos que no puede reconocer (comillas o corchetes sin cerrar). Un SQL con errores lógicos se formatea igualmente.
 - Convertidor de timestamp: la detección automática de segundos/milisegundos falla con milisegundos anteriores a marzo de 1973 (hay que elegir la unidad a mano), y las fechas legibles se limitan a los años 1–9999.
 - El comparador no resalta diferencias dentro de líneas que apenas se parecen (se muestran como eliminada y añadida).
+- Probador de APIs: como las peticiones salen del navegador, solo funciona con APIs que permitan CORS, y el navegador solo muestra las cabeceras de respuesta que la API expone e ignora cabeceras como `Cookie`, `Host` u `Origin`. Desde la web en HTTPS no se pueden llamar URLs `http://` salvo `localhost`. Límites: 1 MB de cuerpo enviado, 5 MB de respuesta mostrada y 30 segundos de espera. Los flujos OAuth necesitan que el endpoint de token permita CORS; el client_secret se usa desde el navegador, así que solo debe usarse con credenciales de prueba. El flujo PKCE no se ha probado contra un proveedor real.
 - Tras instalar dependencias o cambiar la configuración, reinicia `npm run dev` (y borra `node_modules/.vite` si la interfaz deja de hidratar).
 - No hay imagen para redes sociales (`og:image`).
 - La política de privacidad es un borrador técnico, no asesoramiento legal.

@@ -8,11 +8,11 @@ const link = 'text-indigo-700 underline dark:text-indigo-400';
 
 <BaseLayout
   title="Política de privacidad — DevTools"
-  description="Qué datos trata DevTools: las herramientas procesan el contenido en tu navegador, no usan cookies y no lo envían a servidores."
+  description="Qué datos trata DevTools: las herramientas procesan el contenido en tu navegador, no usan cookies y no lo envían a nuestros servidores."
 >
   <div class="mx-auto max-w-3xl px-4 py-12">
     <h1 class="text-3xl font-bold">Política de privacidad</h1>
-    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Última actualización: 21 de octubre de 2026</p>
+    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Última actualización: 27 de octubre de 2026</p>
 
     <div class="mt-8 space-y-8 text-slate-700 dark:text-slate-300">
       <section aria-labelledby="responsable">
@@ -34,6 +34,12 @@ const link = 'text-indigo-700 underline dark:text-indigo-400';
       <section aria-labelledby="contenido">
         <h2 id="contenido" class={h2}>Lo que escribes en las herramientas</h2>
         <p class="mt-2">Las herramientas procesan el contenido en tu navegador. No se envía a nuestros servidores ni a servicios externos, y tampoco se guarda automáticamente. Al cerrar o recargar la página, desaparece.</p>
+        <p class="mt-2">
+          La excepción es el <a class={link} href="/tools/api-tester/">probador de APIs</a>: al pulsar «Enviar», tu navegador manda la petición (URL, cabeceras, credenciales y cuerpo que hayas escrito) directamente a la dirección que indicas, sin pasar por nuestros servidores. Esa API recibe los datos y los trata según sus propias condiciones; DevTools no los ve ni los guarda. Las peticiones se envían sin cookies ni cabecera <code>Referer</code>. Los ejemplos de esa herramienta llaman a la API pública de prueba JSONPlaceholder, solo si pulsas «Enviar».
+        </p>
+        <p class="mt-2">
+          Si usas «Obtener un token», tus credenciales (usuario, contraseña, client_id o client_secret) se envían del mismo modo, directamente al servidor de login o de OAuth que indicas. Con el inicio de sesión OAuth en ventana emergente, el proveedor te devuelve a una página de este sitio con un código de un solo uso en la dirección. Como cualquier visita, esa dirección pasa por nuestro alojamiento, salvo que actives la opción de recibir el código en el fragmento (#). Ese código no sirve sin la clave temporal que solo conserva tu navegador. Los tokens obtenidos no se guardan: desaparecen al recargar la página.
+        </p>
       </section>
 
       <section aria-labelledby="almacenamiento">
